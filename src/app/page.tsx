@@ -1,21 +1,21 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import Header from './components/Header'
-import Image from 'next/image' // Import Image from next/image
+import Image from 'next/image'
 
 export default function Home() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null) // Proper typing for the canvas reference
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
     if (!canvasRef.current) return
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
-    if (!ctx) return // Early return if canvas context is not found
+    
+    if (!ctx) return // Ensure ctx is not null
 
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    // Define a proper type for particles (use an interface for better typing)
     interface Particle {
       x: number
       y: number
@@ -78,11 +78,9 @@ export default function Home() {
 
           <div className="flex justify-center gap-6 mb-6">
             <a href="https://www.linkedin.com/in/finn-hettinga-742a30304/" target="_blank" rel="noopener noreferrer">
-              {/* Use Image component instead of img tag */}
               <Image src="/linkedin.png" alt="LinkedIn" width={40} height={40} className="hover:scale-110 transition" />
             </a>
             <a href="https://github.com/finnhet" target="_blank" rel="noopener noreferrer">
-              {/* Use Image component instead of img tag */}
               <Image src="/github.png" alt="GitHub" width={40} height={40} className="hover:scale-110 transition" />
             </a>
           </div>
