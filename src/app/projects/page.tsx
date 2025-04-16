@@ -3,7 +3,7 @@ import Header from '../components/Header'
 const projects = [
   {
     title: 'Portfolio Website',
-    description: 'Deze website gebouwd met Next.js en Tailwind CSS.',
+    description: 'Mooie portfolio',
     link: 'https://github.com/finnhet/portfolio'
   },
   {
