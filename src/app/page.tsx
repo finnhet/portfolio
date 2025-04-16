@@ -72,7 +72,6 @@ export default function Home() {
 
           <p className="text-gray-300 mb-6 text-lg">
             17-jarige Software Development Student aan Firda Sneek<br />
-            Stagiair Backend API Developer bij DevOps NL
           </p>
           <p className="text-gray-400 mb-6">
             Backend-focused, leergierig en gedreven om schaalbare, veilige software te bouwen.
