@@ -8,10 +8,12 @@ export default function Home() {
 
   useEffect(() => {
     if (!canvasRef.current) return
+
     const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
-    
-    if (!ctx) return 
+    const context = canvas.getContext('2d')
+    if (!context) return
+
+    const ctx = context
 
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
@@ -37,9 +39,8 @@ export default function Home() {
     }
 
     const animate = () => {
-      
-      ctx!.fillStyle = 'rgba(0, 0, 0, 0.25)'
-      ctx!.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.25)'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       particles.forEach(p => {
         p.x += p.dx
@@ -48,17 +49,17 @@ export default function Home() {
         if (p.x < 0 || p.x > canvas.width) p.dx *= -1
         if (p.y < 0 || p.y > canvas.height) p.dy *= -1
 
-        ctx!.beginPath()
-        ctx!.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx!.fillStyle = '#ffffff'
-        ctx!.fill()
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
+        ctx.fillStyle = '#ffffff'
+        ctx.fill()
       })
 
       requestAnimationFrame(animate)
     }
 
     animate()
-}, [])
+  }, [])
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -68,7 +69,7 @@ export default function Home() {
 
         <div className="bg-black/60 p-10 rounded-2xl shadow-lg max-w-2xl w-full">
           <h1 className="text-5xl font-bold text-white mb-6">Finn Hettinga</h1>
-        
+
           <p className="text-gray-300 mb-6 text-lg">
             17-jarige Software Development Student aan Firda Sneek<br />
             Stagiair Backend API Developer bij DevOps NL
@@ -78,10 +79,10 @@ export default function Home() {
           </p>
 
           <div className="flex justify-center gap-6 mb-6">
-            <a href="https:
+            <a href="https://linkedin.com/in/jouw-profiel">
               <Image src="/linkedin.png" alt="LinkedIn" width={40} height={40} className="hover:scale-110 transition" />
             </a>
-            <a href="https:
+            <a href="https://github.com/jouw-gebruikersnaam">
               <Image src="/github.png" alt="GitHub" width={40} height={40} className="hover:scale-110 transition" />
             </a>
           </div>
