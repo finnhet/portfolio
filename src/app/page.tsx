@@ -79,10 +79,10 @@ export default function Home() {
           </p>
 
           <div className="flex justify-center gap-6 mb-6">
-            <a href="https://linkedin.com/in/jouw-profiel">
+            <a href="https://www.linkedin.com/in/finn-hettinga-742a30304/">
               <Image src="/linkedin.png" alt="LinkedIn" width={40} height={40} className="hover:scale-110 transition" />
             </a>
-            <a href="https://github.com/jouw-gebruikersnaam">
+            <a href="https://github.com/finnhet">
               <Image src="/github.png" alt="GitHub" width={40} height={40} className="hover:scale-110 transition" />
             </a>
           </div>
