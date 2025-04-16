@@ -7,15 +7,17 @@ export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
-    if (!canvasRef.current) return
-  
     const canvas = canvasRef.current
+    if (!canvas) return
+
     const context = canvas.getContext('2d')
     if (!context) return
-  
+
+    const ctx = context
+
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
-  
+
     interface Particle {
       x: number
       y: number
@@ -23,9 +25,9 @@ export default function Home() {
       dx: number
       dy: number
     }
-  
+
     const particles: Particle[] = []
-  
+
     for (let i = 0; i < 100; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -35,33 +37,27 @@ export default function Home() {
         dy: Math.random() * 0.5 - 0.25,
       })
     }
-  
+
     const animate = () => {
-      if (!canvasRef.current) return
-  
-      const canvas = canvasRef.current
-      const ctx = canvas.getContext('2d')
-      if (!ctx) return
-  
       ctx.fillStyle = 'rgba(0, 0, 0, 0.25)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
-  
+
       particles.forEach(p => {
         p.x += p.dx
         p.y += p.dy
-  
+
         if (p.x < 0 || p.x > canvas.width) p.dx *= -1
         if (p.y < 0 || p.y > canvas.height) p.dy *= -1
-  
+
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
         ctx.fillStyle = '#ffffff'
         ctx.fill()
       })
-  
+
       requestAnimationFrame(animate)
     }
-  
+
     animate()
   }, [])
 
