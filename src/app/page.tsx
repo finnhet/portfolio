@@ -71,7 +71,7 @@ export default function Home() {
           <h1 className="text-5xl font-bold text-white mb-6">Finn Hettinga</h1>
 
           <p className="text-gray-300 mb-6 text-lg">
-            17-jarige Software Development Student aan Firda Sneek<br />
+            18-jarige Software Development Student aan Firda Sneek<br />
           </p>
           <p className="text-gray-400 mb-6">
             Backend-focused, leergierig en gedreven om schaalbare, veilige software te bouwen.
