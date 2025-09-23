@@ -11,6 +11,11 @@ const projects = [
     description: 'Een betere manier om stages te zoeken',
     link: 'https://github.com/finnhet/stagecentrum'
   },
+  {
+    title: 'AIboard',
+    description: 'Verbeterde samenwerking',
+    link: 'https://github.com/finnhet/whiteboardai'
+  },
 ]
 
 export default function Projects() {
