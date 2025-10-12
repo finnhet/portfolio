@@ -64,10 +64,9 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0" />
+      <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none" />
+      <Header />
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-20 min-h-screen">
-        <Header />
-
         <div className="bg-black/60 p-10 rounded-2xl shadow-lg max-w-2xl w-full">
           <h1 className="text-5xl font-bold text-white mb-6">Finn Hettinga</h1>
 
