@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 import Header from './components/Header'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -85,13 +86,12 @@ export default function Home() {
               <Image src="/github.png" alt="GitHub" width={40} height={40} className="hover:scale-110 transition" />
             </a>
           </div>
-
-          <a
+          <Link
             href="/projects"
             className="inline-block bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition"
           >
             Bekijk Projecten
-          </a>
+          </Link>
         </div>
       </div>
     </div>
