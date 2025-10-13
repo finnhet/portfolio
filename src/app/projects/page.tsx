@@ -20,9 +20,9 @@ const projects = [
 
 export default function Projects() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="relative min-h-screen bg-black text-white overflow-hidden">
       <Header />
-      <div className="max-w-4xl mx-auto px-6 py-32">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 py-32">
         <h1 className="text-4xl font-bold mb-10">Mijn Projecten</h1>
 
         <div className="grid gap-6">

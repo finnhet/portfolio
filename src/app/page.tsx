@@ -16,8 +16,13 @@ export default function Home() {
 
     const ctx = context
 
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
 
     interface Particle {
       x: number
@@ -39,6 +44,8 @@ export default function Home() {
       })
     }
 
+    let animationId: number
+
     const animate = () => {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.25)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -56,10 +63,17 @@ export default function Home() {
         ctx.fill()
       })
 
-      requestAnimationFrame(animate)
+      animationId = requestAnimationFrame(animate)
     }
 
     animate()
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas)
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
   }, [])
 
   return (
@@ -79,10 +93,10 @@ export default function Home() {
 
           <div className="flex justify-center gap-6 mb-6">
             <a href="https://www.linkedin.com/in/finn-hettinga-742a30304/">
-              <Image src="/linkedin.png" alt="LinkedIn" width={40} height={40} className="hover:scale-110 transition" />
+              <Image src="/linkedin.svg" alt="LinkedIn" width={40} height={40} className="hover:scale-110 transition" />
             </a>
             <a href="https://github.com/finnhet">
-              <Image src="/github.png" alt="GitHub" width={40} height={40} className="hover:scale-110 transition" />
+              <Image src="/github.svg" alt="GitHub" width={40} height={40} className="hover:scale-110 transition" />
             </a>
           </div>
           <Link
