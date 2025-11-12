@@ -27,7 +27,7 @@ const skills = ['Laravel', 'React', 'PHP', 'TypeScript'] as const
 const learning = ['Golang', 'Java', 'React Native'] as const
 const COLORS = ['#60a5fa', '#34d399', '#a78bfa', '#f472b6', '#fbbf24'] as const
 
-const ParticleCanvas = memo(() => {
+const ParticleCanvas = memo(function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -117,50 +117,58 @@ const ParticleCanvas = memo(() => {
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 })
 
-const SkillBadge = memo(({ skill }: { skill: string }) => (
-  <span className="px-3 py-1 text-xs bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 rounded-full border border-blue-500/30 hover:border-blue-400 transition-all">
-    {skill}
-  </span>
-))
+const SkillBadge = memo(function SkillBadge({ skill }: { skill: string }) {
+  return (
+    <span className="px-3 py-1 text-xs bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 rounded-full border border-blue-500/30 hover:border-blue-400 transition-all">
+      {skill}
+    </span>
+  )
+})
 
-const LearningItem = memo(({ item }: { item: string }) => (
-  <div className="text-sm text-slate-300 flex items-center gap-2">
-    <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-    {item}
-  </div>
-))
-
-const ProjectCard = memo(({ project }: { project: typeof projects[number] }) => (
-  <a
-    href={project.link}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block group bg-slate-900/60 rounded-lg border border-slate-700/50 hover:border-blue-500/50 p-4 transition-all hover:scale-[1.02]"
-  >
-    <div className="flex items-start justify-between mb-2">
-      <h3 className="text-base font-semibold text-white group-hover:text-blue-400 transition-colors">
-        {project.title}
-      </h3>
-      <svg className="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-      </svg>
+const LearningItem = memo(function LearningItem({ item }: { item: string }) {
+  return (
+    <div className="text-sm text-slate-300 flex items-center gap-2">
+      <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+      {item}
     </div>
-    <p className="text-xs text-slate-400 mb-3">{project.description}</p>
-    <div className="flex flex-wrap gap-1.5">
-      {project.tech.map((tech) => (
-        <span key={tech} className="px-2 py-0.5 text-xs bg-blue-500/10 text-blue-400 rounded border border-blue-500/20">
-          {tech}
-        </span>
-      ))}
-    </div>
-  </a>
-))
+  )
+})
 
-const Card = memo(({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-  <div className={`bg-slate-800/60 backdrop-blur-md rounded-xl border border-slate-700/50 p-6 shadow-xl ${className}`}>
-    {children}
-  </div>
-))
+const ProjectCard = memo(function ProjectCard({ project }: { project: typeof projects[number] }) {
+  return (
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block group bg-slate-900/60 rounded-lg border border-slate-700/50 hover:border-blue-500/50 p-4 transition-all hover:scale-[1.02]"
+    >
+      <div className="flex items-start justify-between mb-2">
+        <h3 className="text-base font-semibold text-white group-hover:text-blue-400 transition-colors">
+          {project.title}
+        </h3>
+        <svg className="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </div>
+      <p className="text-xs text-slate-400 mb-3">{project.description}</p>
+      <div className="flex flex-wrap gap-1.5">
+        {project.tech.map((tech) => (
+          <span key={tech} className="px-2 py-0.5 text-xs bg-blue-500/10 text-blue-400 rounded border border-blue-500/20">
+            {tech}
+          </span>
+        ))}
+      </div>
+    </a>
+  )
+})
+
+const Card = memo(function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`bg-slate-800/60 backdrop-blur-md rounded-xl border border-slate-700/50 p-6 shadow-xl ${className}`}>
+      {children}
+    </div>
+  )
+})
 
 export default function Home() {
   return (
