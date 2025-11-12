@@ -1,20 +1,41 @@
 'use client'
-import { useEffect, useRef } from 'react'
-import Header from './components/Header'
+import { useEffect, useRef, memo } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 
-export default function Home() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+const projects = [
+  {
+    title: 'Portfolio',
+    description: 'Modern portfolio website',
+    link: 'https://github.com/finnhet/portfolio',
+    tech: ['Next.js', 'TypeScript']
+  },
+  {
+    title: 'Stagecentrum',
+    description: 'Platform voor stages',
+    link: 'https://github.com/finnhet/stagecentrum',
+    tech: ['React', 'Node.js']
+  },
+  {
+    title: 'AIboard',
+    description: 'AI whiteboard tool',
+    link: 'https://github.com/finnhet/whiteboardai',
+    tech: ['AI', 'Canvas']
+  },
+] as const
+
+const skills = ['Laravel', 'React', 'PHP'] as const
+const learning = ['Golang', 'Java', 'React Native'] as const
+const COLORS = ['#60a5fa', '#34d399', '#a78bfa', '#f472b6', '#fbbf24'] as const
+
+const ParticleCanvas = memo(() => {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const context = canvas.getContext('2d')
-    if (!context) return
-
-    const ctx = context
+    const ctx = canvas.getContext('2d', { alpha: false })
+    if (!ctx) return
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
@@ -22,91 +43,235 @@ export default function Home() {
     }
 
     resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
-
+    
     interface Particle {
       x: number
       y: number
+      vx: number
+      vy: number
       radius: number
-      dx: number
-      dy: number
+      color: string
     }
 
-    const particles: Particle[] = []
-
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 2 + 1,
-        dx: Math.random() * 0.5 - 0.25,
-        dy: Math.random() * 0.5 - 0.25,
-      })
-    }
+    const particles: Particle[] = Array.from({ length: 50 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      radius: Math.random() * 3 + 1,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)]
+    }))
 
     let animationId: number
 
     const animate = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.25)'
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.1)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      particles.forEach(p => {
-        p.x += p.dx
-        p.y += p.dy
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]
+        p.x += p.vx
+        p.y += p.vy
 
-        if (p.x < 0 || p.x > canvas.width) p.dx *= -1
-        if (p.y < 0 || p.y > canvas.height) p.dy *= -1
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = '#ffffff'
+        ctx.fillStyle = p.color
+        ctx.globalAlpha = 0.6
         ctx.fill()
-      })
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j]
+          const dx = p.x - p2.x
+          const dy = p.y - p2.y
+          const dist = dx * dx + dy * dy 
+
+          if (dist < 22500) { 
+            const actualDist = Math.sqrt(dist)
+            ctx.strokeStyle = p.color
+            ctx.globalAlpha = 0.15 * (1 - actualDist / 150)
+            ctx.lineWidth = 1
+            ctx.beginPath()
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(p2.x, p2.y)
+            ctx.stroke()
+          }
+        }
+      }
+      ctx.globalAlpha = 1
 
       animationId = requestAnimationFrame(animate)
     }
 
     animate()
 
+    window.addEventListener('resize', resizeCanvas)
     return () => {
       window.removeEventListener('resize', resizeCanvas)
-      if (animationId) {
-        cancelAnimationFrame(animationId)
-      }
+      cancelAnimationFrame(animationId)
     }
   }, [])
 
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+})
+
+const SkillBadge = memo(({ skill }: { skill: string }) => (
+  <span className="px-3 py-1 text-xs bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 rounded-full border border-blue-500/30 hover:border-blue-400 transition-all">
+    {skill}
+  </span>
+))
+
+const LearningItem = memo(({ item }: { item: string }) => (
+  <div className="text-sm text-slate-300 flex items-center gap-2">
+    <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+    {item}
+  </div>
+))
+
+const ProjectCard = memo(({ project }: { project: typeof projects[number] }) => (
+  <a
+    href={project.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="block group bg-slate-900/60 rounded-lg border border-slate-700/50 hover:border-blue-500/50 p-4 transition-all hover:scale-[1.02]"
+  >
+    <div className="flex items-start justify-between mb-2">
+      <h3 className="text-base font-semibold text-white group-hover:text-blue-400 transition-colors">
+        {project.title}
+      </h3>
+      <svg className="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+      </svg>
+    </div>
+    <p className="text-xs text-slate-400 mb-3">{project.description}</p>
+    <div className="flex flex-wrap gap-1.5">
+      {project.tech.map((tech) => (
+        <span key={tech} className="px-2 py-0.5 text-xs bg-blue-500/10 text-blue-400 rounded border border-blue-500/20">
+          {tech}
+        </span>
+      ))}
+    </div>
+  </a>
+))
+
+const Card = memo(({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+  <div className={`bg-slate-800/60 backdrop-blur-md rounded-xl border border-slate-700/50 p-6 shadow-xl ${className}`}>
+    {children}
+  </div>
+))
+
+export default function Home() {
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none" />
-      <Header />
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-20 min-h-screen">
-        <div className="bg-black/60 p-10 rounded-2xl shadow-lg max-w-2xl w-full">
-          <h1 className="text-5xl font-bold text-white mb-6">Finn Hettinga</h1>
+    <div className="relative h-screen overflow-hidden bg-slate-900">
+      <ParticleCanvas />
+      
+      <div className="relative z-10 h-screen flex items-center justify-center p-4 md:p-8">
+        <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-4 h-full max-h-[900px]">
+          
+          {/* Left Column - Hero & Skills */}
+          <div className="lg:col-span-1 flex flex-col gap-4">
+            <Card>
+              <div className="flex items-center gap-4 mb-4">
+               
+                <div>
+                  <h1 className="text-2xl font-bold text-white">Finn Hettinga</h1>
+                  <p className="text-sm text-slate-400">Software Developer</p>
+                </div>
+              </div>
+              
+              <p className="text-sm text-slate-300 mb-4">
+                18 jaar • Firda Sneek<br />
+                Backend-focused developer, gepassioneerd over schaalbare en veilige software.
+              </p>
 
-          <p className="text-gray-300 mb-6 text-lg">
-            18-jarige Software Development Student aan Firda Sneek<br />
-          </p>
-          <p className="text-gray-400 mb-6">
-            Backend-focused, leergierig en gedreven om schaalbare, veilige software te bouwen.
-          </p>
+              <div className="flex gap-3">
+                <a 
+                  href="https://www.linkedin.com/in/finn-hettinga-742a30304/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-blue-600 hover:bg-blue-500 p-2 rounded-lg transition-all flex items-center justify-center gap-2 text-white text-sm"
+                >
+                  <Image src="/linkedin.svg" alt="LinkedIn" width={18} height={18} />
+                  LinkedIn
+                </a>
+                <a 
+                  href="https://github.com/finnhet"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-slate-700 hover:bg-slate-600 p-2 rounded-lg transition-all flex items-center justify-center gap-2 text-white text-sm"
+                >
+                  <Image src="/github.svg" alt="GitHub" width={18} height={18} />
+                  GitHub
+                </a>
+              </div>
+            </Card>
 
-          <div className="flex justify-center gap-6 mb-6">
-            <a href="https://www.linkedin.com/in/finn-hettinga-742a30304/">
-              <Image src="/linkedin.svg" alt="LinkedIn" width={40} height={40} className="hover:scale-110 transition" />
-            </a>
-            <a href="https://github.com/finnhet">
-              <Image src="/github.svg" alt="GitHub" width={40} height={40} className="hover:scale-110 transition" />
-            </a>
+            <Card className="flex-1">
+              <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <span className="text-xl"></span>Skills
+              </h2>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {skills.map((skill) => <SkillBadge key={skill} skill={skill} />)}
+              </div>
+
+              <h2 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                Aan het leren
+              </h2>
+              <div className="space-y-2">
+                {learning.map((item) => <LearningItem key={item} item={item} />)}
+              </div>
+            </Card>
           </div>
-          <Link
-            href="/projects"
-            className="inline-block bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition"
-          >
-            Bekijk Projecten
-          </Link>
+
+          {/* Right Columns - Over Mij + Projects */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
+            <Card>
+              <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                <span className="text-2xl"></span>Over Mij
+              </h2>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                Hoi! Ik ben Finn, een student Software developer in Friesland.
+                Ik ben gepassioneerd in het bouwen van websites en applicaties.
+                Ik streef ernaar om mijn ideeën tot leven te brengen door middel van code.
+              </p>
+            </Card>
+
+            <Card className="flex-1 flex flex-col">
+              <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <span className="text-2xl"></span>Projecten
+              </h2>
+              
+              <div className="grid md:grid-cols-2 gap-3 overflow-y-auto pr-2 custom-scrollbar">
+                {projects.map((project) => <ProjectCard key={project.title} project={project} />)}
+              </div>
+            </Card>
+
+            <div className="text-center text-xs text-slate-500 py-2">
+              © 2025 Finn Hettinga
+            </div>
+          </div>
+
         </div>
       </div>
+
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(51, 65, 85, 0.3);
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(100, 116, 139, 0.5);
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(100, 116, 139, 0.7);
+        }
+      `}</style>
     </div>
   )
 }
