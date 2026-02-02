@@ -23,8 +23,8 @@ const projects = [
   },
 ] as const
 
-const skills = ['Laravel', 'React', 'PHP', 'TypeScript'] as const
-const learning = ['Golang', 'Java', 'React Native'] as const
+const skills = ['Laravel', 'React', 'PHP', 'TypeScript', 'React Native'] as const
+const learning = ['Golang', 'Java'] as const
 const COLORS = ['#60a5fa', '#34d399', '#a78bfa', '#f472b6', '#fbbf24'] as const
 
 const ParticleCanvas = memo(function ParticleCanvas() {
@@ -114,7 +114,7 @@ const ParticleCanvas = memo(function ParticleCanvas() {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+  return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none" />
 })
 
 const SkillBadge = memo(function SkillBadge({ skill }: { skill: string }) {
@@ -140,7 +140,7 @@ const ProjectCard = memo(function ProjectCard({ project }: { project: typeof pro
       href={project.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="block group bg-slate-900/60 rounded-lg border border-slate-700/50 hover:border-blue-500/50 p-4 transition-all hover:scale-[1.02]"
+      className="block group bg-slate-800/60 rounded-lg border border-slate-700/50 hover:border-blue-500/50 p-4 transition-all hover:scale-[1.02]"
     >
       <div className="flex items-start justify-between mb-2">
         <h3 className="text-base font-semibold text-white group-hover:text-blue-400 transition-colors">
@@ -172,15 +172,13 @@ const Card = memo(function Card({ children, className = '' }: { children: React.
 
 export default function Home() {
   return (
-    <div className="relative h-screen overflow-hidden bg-slate-900">
+    <div className="relative min-h-screen bg-slate-900">
       <ParticleCanvas />
       
-      <div className="relative z-10 min-h-screen flex flex-col p-3 md:p-8">
-        <div className="flex-1 flex items-center justify-center py-4 md:py-0">
-          <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 h-full max-h-[900px] overflow-y-auto md:overflow-hidden custom-scrollbar">
+      <div className="relative z-10 p-4 md:p-8 md:h-screen md:overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4 md:h-full md:max-h-[900px]">
           
-          {/* Left Column - Hero & Skills */}
-          <div className="lg:col-span-1 flex flex-col gap-3 md:gap-4">
+          <div className="lg:col-span-1 flex flex-col gap-4">
             <Card>
               <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
                 <div>
@@ -238,7 +236,7 @@ export default function Home() {
                 {learning.map((item) => <LearningItem key={item} item={item} />)}
               </div>
             </Card>
-          </div>          {/* Right Columns - Over Mij + Projects */}
+          </div>
           <div className="lg:col-span-2 flex flex-col gap-3 md:gap-4">
             <Card>
               <h2 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 flex items-center gap-2">
@@ -264,11 +262,9 @@ export default function Home() {
           </div>
 
           </div>
-        </div>
 
-        {/* Footer - Stuck to bottom middle */}
-        <div className="text-center text-xs text-slate-500 py-3 md:py-4 mt-2 md:mt-0">
-          © 2025 Finn Hettinga
+        <div className="text-center text-xs text-slate-500 pt-8 pb-24 md:py-4">
+          © 2026 Finn Hettinga
         </div>
       </div>
 
