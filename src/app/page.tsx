@@ -188,8 +188,8 @@ export default function Home() {
               </div>
               
               <p className="text-xs md:text-sm text-slate-300 mb-2">
-                18 jaar • Firda Sneek<br />
-                Backend-focused developer, gepassioneerd over schaalbare en veilige software.
+                Student Software Development • Firda Sneek
+                Gespecialiseerd in backend en webapplicaties
               </p>
 
               <a 
@@ -243,9 +243,7 @@ export default function Home() {
                 <span className="text-xl md:text-2xl"></span>Over Mij
               </h2>
               <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
-                Hoi! Ik ben Finn, een student Software developer in Friesland.
-                Ik ben gepassioneerd in het bouwen van websites en applicaties.
-                Ik streef ernaar om mijn ideeën tot leven te brengen door middel van code.
+                Backend developer gespecialiseerd in moderne webapplicaties met Laravel, React en TypeScript.
               </p>
             </Card>
 
