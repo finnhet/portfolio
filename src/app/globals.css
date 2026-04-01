@@ -1,11 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0d0c0a;
-  --foreground: #ede8df;
-  --copper: #c4714f;
-  --sage: #7aad9b;
-  --sand: #a89078;
+  --background: #0e0c0b;
+  --foreground: #f2ede5;
+  --copper: #d4845a;
+  --sage: #8fb3a7;
 }
 
 html, body {
@@ -16,8 +15,8 @@ html, body {
 }
 
 body {
-  background-color: #0d0c0a;
-  color: #ede8df;
+  background-color: #0e0c0b;
+  color: #f2ede5;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
@@ -28,14 +27,9 @@ body {
 .portfolio-root { cursor: none; }
 .portfolio-root a, .portfolio-root button { cursor: none; }
 
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
 @keyframes pulseOpacity {
   0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
+  50% { opacity: 0.85; }
 }
 
 @keyframes lineGrow {
@@ -48,11 +42,6 @@ body {
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Custom cursor */
@@ -68,32 +57,20 @@ body {
 .cursor-dot {
   width: 6px;
   height: 6px;
-  background: #ede8df;
+  background: #f2ede5;
   border-radius: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s;
 }
 
 .cursor-ring {
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(196, 113, 79, 0.55);
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(212, 132, 90, 0.6);
   border-radius: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease;
-}
-
-.cursor-glow {
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  transform: translate(-50%, -50%);
-  transition: left 0.18s ease-out, top 0.18s ease-out;
+  transition: width 0.25s ease, height 0.25s ease;
 }
 
 /* Noise overlay */
@@ -108,16 +85,16 @@ body {
   z-index: 9998;
 }
 
-/* Horizontal scroll marquee */
+/* Marquee */
 .marquee-track {
   display: flex;
   white-space: nowrap;
-  animation: marquee 30s linear infinite;
+  animation: marquee 28s linear infinite;
 }
 
-/* Mobile nav adjustments */
+/* Mobile */
 @media (max-width: 768px) {
   .portfolio-root { cursor: auto; }
   .portfolio-root a, .portfolio-root button { cursor: pointer; }
-  .cursor, .cursor-glow { display: none; }
+  .cursor { display: none; }
 }
