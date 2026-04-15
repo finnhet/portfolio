@@ -3,8 +3,18 @@ import { useEffect, useRef, useState } from "react";
 
 const FG = "#f2ede5";
 const COPPER = "#d4845a";
-const DIM = "rgba(242,237,229,0.45)";
-const DIM2 = "rgba(242,237,229,0.22)";
+const DIM = "rgba(242,237,229,0.60)";
+const DIM2 = "rgba(242,237,229,0.38)";
+
+// Verander dit naar je echte geboortedatum — leeftijd wordt automatisch bijgehouden
+const BIRTH_DATE = new Date("2008-04-15");
+function getAge(birth: Date): number {
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return age;
+}
 
 const projects = [
   {
@@ -295,7 +305,7 @@ export default function Home() {
     <div
       className="portfolio-root"
       style={{
-        backgroundColor: "#0e0c0b",
+        backgroundColor: "#1c1917",
         color: FG,
         minHeight: "100vh",
         overflowX: "hidden",
@@ -330,7 +340,7 @@ export default function Home() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          background: scrolled ? "rgba(14,12,11,0.92)" : "transparent",
+          background: scrolled ? "rgba(28,25,23,0.92)" : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",
           borderBottom: scrolled ? "1px solid rgba(242,237,229,0.05)" : "none",
           transition: "all 0.4s ease",
@@ -418,7 +428,7 @@ export default function Home() {
             transition: "opacity 0.8s ease 0.1s",
           }}
         >
-          FH · PORTFOLIO · MMXXVI
+          FH · PORTFOLIO
         </div>
 
         {/* FINN — left aligned, cream */}
@@ -488,7 +498,7 @@ export default function Home() {
               whiteSpace: "nowrap",
             }}
           >
-            Backend Developer &nbsp;·&nbsp; NL
+            Backend Developer &nbsp;·&nbsp; Student &nbsp;·&nbsp; {getAge(BIRTH_DATE)} jaar &nbsp;·&nbsp; NL
           </span>
           <div
             style={{
@@ -722,7 +732,7 @@ export default function Home() {
                   margin: 0,
                 }}
               >
-                Backend developer gespecialiseerd in moderne webapplicaties met{" "}
+                <span style={{ color: COPPER, fontWeight: 500 }}>{getAge(BIRTH_DATE)}-jarige</span> student Software Development bij Firda, gespecialiseerd in moderne webapplicaties met{" "}
                 <span style={{ color: COPPER, fontWeight: 500 }}>Laravel</span>,{" "}
                 <span style={{ color: COPPER, fontWeight: 500 }}>React</span> en{" "}
                 <span style={{ color: COPPER, fontWeight: 500 }}>
@@ -859,6 +869,17 @@ export default function Home() {
                   }}
                 >
                   Firda · Sneek
+                </div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-geist-mono)",
+                    fontSize: "0.52rem",
+                    color: "rgba(212,132,90,0.5)",
+                    letterSpacing: "0.06em",
+                    marginTop: "0.35rem",
+                  }}
+                >
+                  {getAge(BIRTH_DATE)} jaar
                 </div>
               </div>
             </div>
