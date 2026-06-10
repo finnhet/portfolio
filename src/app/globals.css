@@ -1,100 +1,73 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Palette: "Waad" — mudflats, mist, reed, one amber buoy ─────────────── */
 :root {
-  --background: #1c1917;
-  --foreground: #f2ede5;
-  --copper: #d4845a;
-  --sage: #8fb3a7;
+  --bg: #e9ece7;
+  --surface: #f4f5f2;
+  --surface-2: #e0e4dd;
+  --line: #c6cdc4;
+  --ink: #20262a;
+  --ink-dim: #5b665f;
+  --reed: #46705a;
+  --amber: #b3672e;
+  --water: #486b7d;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
+.dark {
+  --bg: #0d1114;
+  --surface: #141a1d;
+  --surface-2: #1b2327;
+  --line: #2a343a;
+  --ink: #e3e8e2;
+  --ink-dim: #87938c;
+  --reed: #8cb89a;
+  --amber: #e0a45c;
+  --water: #84aabb;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-dim: var(--ink-dim);
+  --color-reed: var(--reed);
+  --color-amber: var(--amber);
+  --color-water: var(--water);
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "JetBrains Mono", monospace;
+}
+
+html {
+  height: 100%;
+}
+
+/* The viewport is the desktop: while the WM page is mounted the document
+   itself never scrolls — workspaces scroll internally when content
+   overflows. Other routes (e.g. /dailycat) keep normal scrolling. */
+body.wm-desktop {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
-  background-color: #1c1917;
-  color: #f2ede5;
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-overflow-scrolling: touch;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  padding-bottom: env(safe-area-inset-bottom, 0);
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-display);
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
-.portfolio-root { cursor: none; }
-.portfolio-root a, .portfolio-root button { cursor: none; }
-
-@keyframes pulseOpacity {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.85; }
+::selection {
+  background: var(--amber);
+  color: var(--bg);
 }
 
-@keyframes lineGrow {
-  0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
-  30% { opacity: 1; }
-  70% { opacity: 1; }
-  100% { transform: scaleY(1); transform-origin: top; opacity: 0; }
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* Custom cursor */
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 10000;
-  mix-blend-mode: difference;
-}
-
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  background: #f2ede5;
-  border-radius: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-ring {
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(212, 132, 90, 0.6);
-  border-radius: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  transition: width 0.25s ease, height 0.25s ease;
-}
-
-/* Noise overlay */
-.noise-overlay {
-  position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.02;
-  pointer-events: none;
-  z-index: 9998;
-}
-
-/* Marquee */
-.marquee-track {
-  display: flex;
-  white-space: nowrap;
-  animation: marquee 28s linear infinite;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .portfolio-root { cursor: auto; }
-  .portfolio-root a, .portfolio-root button { cursor: pointer; }
-  .cursor { display: none; }
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
 }
