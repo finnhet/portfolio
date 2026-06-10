@@ -14,7 +14,7 @@ export function Contact() {
         Get in touch
       </h3>
       <p className="mt-3 leading-relaxed text-dim">
-        I'm open to full-time opportunities and freelance work. Email is the
+        I&apos;m open to full-time opportunities and freelance work. Email is the
         best way to reach me.
       </p>
       <ul className="mt-6 flex flex-col gap-2">
