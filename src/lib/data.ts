@@ -145,8 +145,19 @@ export const STACK: {
   },
 ];
 
+// Email is stored as char codes and only decoded client-side after mount,
+// so it never appears as plain text in the server-rendered HTML or JS source
+// (keeps it readable for visitors but harder for bots scraping static markup).
+const EMAIL_CODES = [
+  99, 111, 110, 116, 97, 99, 116, 64, 102, 105, 110, 110, 104, 101, 116, 116,
+  105, 110, 103, 97, 46, 110, 108,
+];
+
+export function decodeEmail(): string {
+  return String.fromCharCode(...EMAIL_CODES);
+}
+
 export const CONTACT = {
-  email: "contact@finnhettinga.nl",
   github: "https://github.com/finnhet",
   linkedin: "https://www.linkedin.com/in/finn-hettinga-742a30304/",
 };

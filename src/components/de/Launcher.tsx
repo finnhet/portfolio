@@ -1,19 +1,26 @@
 "use client";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { APPS } from "./apps";
 import { useDesktop } from "./Desktop";
-import { CONTACT } from "@/lib/data";
-
-const SHORTCUTS = [
-  { label: "daily cat", href: "/dailycat", external: false },
-  { label: "github", href: CONTACT.github, external: true },
-  { label: "linkedin", href: CONTACT.linkedin, external: true },
-  { label: "email", href: `mailto:${CONTACT.email}`, external: false },
-];
+import { CONTACT, decodeEmail } from "@/lib/data";
 
 /** Kickoff-style application launcher, anchored to the panel's launcher button. */
 export function Launcher({ onClose }: { onClose: () => void }) {
   const { open } = useDesktop();
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    setEmail(decodeEmail());
+  }, []);
+
+  const SHORTCUTS = [
+    { label: "daily cat", href: "/dailycat", external: false },
+    { label: "github", href: CONTACT.github, external: true },
+    { label: "linkedin", href: CONTACT.linkedin, external: true },
+    { label: "email", href: email ? `mailto:${email}` : undefined, external: false },
+  ];
+
   return (
     <>
       {/* click-away layer */}

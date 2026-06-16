@@ -1,13 +1,24 @@
 "use client";
-import { CONTACT } from "@/lib/data";
-
-const LINKS = [
-  { label: "email", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
-  { label: "github", value: "github.com/finnhet", href: CONTACT.github },
-  { label: "linkedin", value: "finn-hettinga", href: CONTACT.linkedin },
-];
+import { useEffect, useState } from "react";
+import { CONTACT, decodeEmail } from "@/lib/data";
 
 export function Contact() {
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    setEmail(decodeEmail());
+  }, []);
+
+  const links = [
+    {
+      label: "email",
+      value: email ?? "loading…",
+      href: email ? `mailto:${email}` : undefined,
+    },
+    { label: "github", value: "github.com/finnhet", href: CONTACT.github },
+    { label: "linkedin", value: "finn-hettinga", href: CONTACT.linkedin },
+  ];
+
   return (
     <div>
       <h3 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
@@ -18,11 +29,11 @@ export function Contact() {
         best way to reach me.
       </p>
       <ul className="mt-6 flex flex-col gap-2">
-        {LINKS.map((l) => (
+        {links.map((l) => (
           <li key={l.label}>
             <a
               href={l.href}
-              target={l.href.startsWith("mailto") ? undefined : "_blank"}
+              target={l.href && !l.href.startsWith("mailto") ? "_blank" : undefined}
               rel="noreferrer"
               className="group flex items-baseline gap-3 rounded-sm border border-line px-4 py-3 font-mono text-sm transition-colors duration-150 hover:border-amber"
             >
