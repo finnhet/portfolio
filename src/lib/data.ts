@@ -1,4 +1,4 @@
-export const BIRTH_DATE = new Date("2008-04-15");
+export const BIRTH_DATE = new Date("2007-08-01");
 
 export function getAge(birth: Date = BIRTH_DATE): number {
   const today = new Date();
@@ -165,7 +165,7 @@ export const CONTACT = {
 export const INTERESTS = [
   {
     name: "Music",
-    detail: "Mk.gee, Tamino, Adrianne Lenker.",
+    detail: "Mk.gee, Tamino, Dijon.",
   },
   {
     name: "Linux",
