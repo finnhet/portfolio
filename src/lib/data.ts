@@ -101,6 +101,24 @@ export const PROJECTS: Project[] = [
     repo: "https://github.com/finnhet/portfolio",
     shot: "site",
   },
+  {
+    id: "kapiteinssloep",
+    title: "De Kapiteinssloep",
+    windowTitle: "~/projects/kapiteinssloep",
+    tagline: "Site for a handcrafted sloop builder",
+    description:
+      "A marketing site for a boatbuilder specialising in handcrafted sloeps. Visitors can browse the boat models and services and get in touch. Built with Next.js on the front-end and a headless CMS for content.",
+    details: [
+      "Overview of the custom-built boat models and pre-owned inventory",
+      "Overview of services: refitting, maintenance and winter storage",
+      "Contact section for enquiries",
+      "Content managed through a headless CMS backend",
+    ],
+    tech: ["Next.js", "React", "TypeScript"],
+    year: "2025",
+    live: "https://dekapiteinssloep.nl",
+    shot: "site",
+  },
 ];
 
 export type SkillLevel = "daily" | "comfortable" | "learning";
