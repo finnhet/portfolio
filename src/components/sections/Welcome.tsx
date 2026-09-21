@@ -55,7 +55,6 @@ export function Welcome() {
         <p className="mb-2 font-mono text-xs text-dim">fetch</p>
         <dl>
           <FetchRow label="host" value="Friesland, NL" />
-          <FetchRow label="os" value="Arch Linux" />
           <FetchRow label="shell" value="fish" />
           <FetchRow label="uptime" value={`${getAge()} years`} />
           <FetchRow label="stack" value="Laravel · React · TS" />

@@ -2,29 +2,29 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ── Palette: "Waad" — mudflats, mist, reed, one amber buoy ─────────────── */
+/* ── Palette: "Slate & Pine" — near-black/grey, one dark-green accent ───── */
 :root {
-  --bg: #e9ece7;
-  --surface: #f4f5f2;
-  --surface-2: #e0e4dd;
-  --line: #c6cdc4;
-  --ink: #20262a;
-  --ink-dim: #5b665f;
-  --reed: #46705a;
-  --amber: #b3672e;
-  --water: #486b7d;
+  --bg: #f5f5f4;
+  --surface: #fcfcfb;
+  --surface-2: #ececea;
+  --line: #d9d9d6;
+  --ink: #1a1a19;
+  --ink-dim: #6b6b67;
+  --reed: #3f7d57;
+  --amber: #1f6f45;
+  --water: #8a8f89;
 }
 
 .dark {
-  --bg: #0d1114;
-  --surface: #141a1d;
-  --surface-2: #1b2327;
-  --line: #2a343a;
-  --ink: #e3e8e2;
-  --ink-dim: #87938c;
-  --reed: #8cb89a;
-  --amber: #e0a45c;
-  --water: #84aabb;
+  --bg: #0a0a0a;
+  --surface: #121212;
+  --surface-2: #1a1a1a;
+  --line: #2b2b2b;
+  --ink: #ebebe9;
+  --ink-dim: #8c8c8a;
+  --reed: #5a8a68;
+  --amber: #34a05f;
+  --water: #6b7570;
 }
 
 @theme inline {
