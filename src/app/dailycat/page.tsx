@@ -25,6 +25,21 @@ async function getDailyCat(): Promise<CatImage> {
   return data[0]
 }
 
+async function getDailyFact(): Promise<string | null> {
+  try {
+    const res = await fetch('https://catfact.ninja/fact', {
+      next: {
+        revalidate: 86400, // cache for 24 hours — new fact every day
+      },
+    })
+    if (!res.ok) return null
+    const data: { fact: string } = await res.json()
+    return data.fact
+  } catch {
+    return null
+  }
+}
+
 export default async function DailyCatPage() {
   let cat: CatImage | null = null
   try {
@@ -32,6 +47,7 @@ export default async function DailyCatPage() {
   } catch {
     // API unavailable or key missing — show fallback
   }
+  const fact = await getDailyFact()
 
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
@@ -162,15 +178,21 @@ export default async function DailyCatPage() {
         </div>
       </div>
 
-      <p
-        style={{
-          marginTop: '2rem',
-          fontSize: '0.7rem',
-          color: '#2d1f4a',
-          letterSpacing: '0.08em',
-        }}
-      >
-      </p>
+      {fact && (
+        <p
+          style={{
+            marginTop: '2rem',
+            maxWidth: '500px',
+            fontSize: '0.85rem',
+            color: '#a78bfa',
+            opacity: 0.8,
+            textAlign: 'center',
+            lineHeight: 1.6,
+          }}
+        >
+          &ldquo;{fact}&rdquo;
+        </p>
+      )}
     </main>
   )
 }
